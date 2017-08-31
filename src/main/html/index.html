@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Janken vote</title>
+    <meta name="description" content="Janken (Rock Paper Scissors deathmatch)">
+    <meta name="author" content="Team Awesome">
+    <link rel="stylesheet" href="">
+  </head>
+
+  <body>
+    <script src=""></script>
+    <div id="janken-score">
+      <table class="scores">
+        <tr>
+          <th>Wins</th>
+          <th>Losses</th>
+          <th>Draws</th>
+          <th>Scissor me timbers</th>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>yes!</td>
+        </tr>
+      </table>
+    </div>
+      </table>
+    </div>
+      </table>
+    </div>
+      </table>
+    </div>
+    <div id="janken-vote">
+      <form id="vote-form" action="/makemove">
+        <select>
+          <option style="background-image:url(static/img/rock.png);">rock</option>
+          <option style="background-image:url(static/img/paper.png);">paper</option>
+          <option style="background-image:url(static/img/scissors.png);">scissors</option>
+        </select>
+        <input type="submit" value="Submit">
+      </form>
+    <div>
+  </body>
+</html>
