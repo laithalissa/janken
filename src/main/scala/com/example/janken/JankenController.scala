@@ -36,7 +36,7 @@ class JankenController extends Controller {
     arena.endRound(Instant.ofEpochSecond(request.timestamp))
   }
 
-  get("/score/:uuid") { request: ScoreRequest =>
+  get("/score/:timestamp/:uuid") { request: ScoreRequest =>
     arena.endRound(Instant.ofEpochSecond(request.timestamp))
       .get(request.uuid)
   }

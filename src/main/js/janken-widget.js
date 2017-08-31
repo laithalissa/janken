@@ -6,22 +6,33 @@
     self.$voteTarget = config.$voteTarget;
 
     self.playerId;
+    self.timestamp;
 
     self.register = function() {
       $.ajax({
-        method: 'PUT',
-        url: '/newplayer',
+        method: 'POST',
+        url: '/new-player',
         success: function(data, textStatus, request) {
-          self.playerId = data.playerId
+          self.playerId = data
         }
       })
     }
 
-    self.makeMove = function(move) {
+    self.getCurrentRound = function() {
+      $.ajax({
+        method: 'GET',
+        url: '/current',
+        success: function(data, textStatus, request) {
+          self.timestamp = data
+        }
+      })
+    }
+
+    self.makeMove = function(timestamp, move) {
       $.ajax({
         method: 'POST',
         url: '/makemove',
-        {playerId: self.playerId, move: move},
+        {timestamp: timestamp, uuid: self.playerId, move: move},
         success: function(data, textStatus, request) {
           self.getScores();
         }
@@ -30,8 +41,7 @@
 
     self.getScores = function() {
       $.ajax({
-        url: '/score',
-        {playerId: self.playerId},
+        url: '/score/' + self.timestamp + '/' + self.playerId,
         success: function(data, textStatus, request) {
           if (data.score) {
             self.renderScores(data);
