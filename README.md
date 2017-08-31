@@ -40,4 +40,4 @@ Rock-Paper-Scissors
    
 ## RUNNING
 
-`sbt 'run -local.doc.root=src/main/html'`
+`sbt 'run -local.doc.root=src/main'`
