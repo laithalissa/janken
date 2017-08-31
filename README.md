@@ -4,6 +4,7 @@ Rock-Paper-Scissors
 ## API
 
  - PUT /newplayer
+
    Response:
    ```
     {
@@ -12,6 +13,7 @@ Rock-Paper-Scissors
     ```
 
  - POST /makemove
+
    Request:
      ```
      {
@@ -19,7 +21,14 @@ Rock-Paper-Scissors
         move: Int
      }
      ```
- - GET /score?playerId=<Int>
+   Response:
+     ```
+     {
+       roundId: String
+     }
+     ```
+ - GET /score?playerId=<String>&roundId=<string>
+   
    Response:
    ```
    {
@@ -27,3 +36,4 @@ Rock-Paper-Scissors
        wins: Int,
        losses: Int
    }
+   ```

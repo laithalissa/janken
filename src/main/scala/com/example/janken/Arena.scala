@@ -1,5 +1,6 @@
 package com.example.janken
 
+import java.time.Instant
 import java.util.concurrent.atomic.AtomicBoolean
 
 import Arena.{Move, PlayerId, Score}
@@ -7,6 +8,7 @@ import Arena.{Move, PlayerId, Score}
 import scala.collection.concurrent.TrieMap
 
 class Arena {
+  private val start = Instant.now
   private val round: TrieMap[PlayerId, Move] = TrieMap()
   private val open: AtomicBoolean = new AtomicBoolean(true)
 
