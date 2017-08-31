@@ -32,7 +32,7 @@
       $.ajax({
         method: 'POST',
         url: '/makemove',
-        {timestamp: timestamp, uuid: self.playerId, move: move},
+        data: {timestamp: timestamp, uuid: self.playerId, move: move},
         success: function(data, textStatus, request) {
           self.getScores();
         }
@@ -67,11 +67,13 @@
         .append($('<td>').text('coming soon!'))
         .append($('<td>').text(data.score))
 
-      self.$scoreTarget.append($table.append($headings).append($scores));
+      $table.append($headings).append($scores);
+      self.$scoreTarget.html($table.html());
     }
 
     self.renderVoteForm = function() {
       var $select = $('<select>')
+      $select
         .append($select.val('r').text('Rock'))
         .append($select.val('p').text('Paper'))
         .append($select.val('s').text('Scissors'))
@@ -83,9 +85,12 @@
         event.preventDefault()
       });
 
-      $('<form>').id('vote-form').append($select).append($submit)
+      self.$voteTarget.html(
+        $('<form>').id('vote-form').append($select).append($submit).html()
+      );
     }
 
+    self.renderVoteForm()
   };
 
   window.JankenWidget = Widget;

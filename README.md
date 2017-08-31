@@ -37,3 +37,7 @@ Rock-Paper-Scissors
        losses: Int
    }
    ```
+   
+## RUNNING
+
+`sbt 'run -local.doc.root=src/main/html'`
