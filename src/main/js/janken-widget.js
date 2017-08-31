@@ -8,6 +8,23 @@
     self.playerId;
 
     self.register = function() {
+      $.ajax({
+        url: '/newplayer',
+        type: 'PUT',
+        success: function(data, textStatus, request) {
+          self.playerId = data.playerId
+        }
+      })
+    }
+
+    self.getScores = function() {
+      $.ajax({
+        url: '/score',
+        {playerId: self.playerId},
+        success: function(data, textStatus, request) {
+          self.renderScores(data);
+        }
+      })
     }
 
     self.renderScores = function(data) {
