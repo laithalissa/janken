@@ -16,7 +16,7 @@ class Arena {
     }
   }
 
-  def endRound(): Map[Int, Score] = ???
+  def endRound(): Map[PlayerId, Score] = ???
 
   def newPlayerId(): PlayerId = ???
 }
