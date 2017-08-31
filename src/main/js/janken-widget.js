@@ -46,7 +46,7 @@
           if (data.score) {
             self.renderScores(data);
           } else {
-            setTimeout(doPoll, 1000);
+            setTimeout(getScores, 1000);
             self.getScores()
           }
         }
