@@ -57,11 +57,8 @@
         .append($('<td>').text('coming soon!'))
         .append($('<td>').text(data.score))
 
-      self.$scoreTarget.append();
-
-      self.$scoreTarget.html(
-        $('<form>').id('vote-form').append($select).append($submit).html()
-      );
+      $table.append($headings).append($scores);
+      self.$scoreTarget.html($table.html());
     }
 
     self.renderVoteForm = function() {
