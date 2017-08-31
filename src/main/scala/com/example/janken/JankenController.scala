@@ -13,7 +13,7 @@ class JankenController extends Controller {
   val arena = new Arena()
 
   get("/") { _: Request =>
-    response.ok.file("../../../../../html/index.html")
+    response.ok.file("index.html")
   }
 
   get("/current") { _: Request =>
