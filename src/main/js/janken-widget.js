@@ -9,10 +9,21 @@
 
     self.register = function() {
       $.ajax({
+        method: 'PUT',
         url: '/newplayer',
-        type: 'PUT',
         success: function(data, textStatus, request) {
           self.playerId = data.playerId
+        }
+      })
+    }
+
+    self.makeMove = function(move) {
+      $.ajax({
+        method: 'POST',
+        url: '/makemove',
+        {playerId: self.playerId, move: move},
+        success: function(data, textStatus, request) {
+          self.getScores();
         }
       })
     }
@@ -22,7 +33,12 @@
         url: '/score',
         {playerId: self.playerId},
         success: function(data, textStatus, request) {
-          self.renderScores(data);
+          if (data.score) {
+            self.renderScores(data);
+          } else {
+            setTimeout(doPoll, 1000);
+            self.getScores()
+          }
         }
       })
     }
@@ -53,8 +69,8 @@
       var $submit = $('<input>').attr('type', 'submit').attr('value', "Submit")
 
       $submit.submit(function(event) {
-        // TODO
-        event.preventDefault();
+        self.makeMove($select.val())
+        event.preventDefault()
       });
 
       $('<form>').id('vote-form').append($select).append($submit)
