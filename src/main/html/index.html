@@ -14,9 +14,19 @@
 
   <body>
     <script src="http://localhost:8888/js"></script>
-    <div id="janken-score">
-    </div>
-    <div id="janken-vote">
-    <div>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="static/js/janken-widget.js"></script>
+    <div id="janken-score"></div>
+    <div id="janken-vote"></div>
+    <script>
+      window.janken = new JankenWidget({
+        $scoreTarget: $('#janken-score'),
+        $voteTarget: $('#janken-vote')
+      });
+    </script>
   </body>
 </html>
