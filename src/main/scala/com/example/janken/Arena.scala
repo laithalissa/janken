@@ -47,7 +47,7 @@ object Arena {
   }
 
   object Move {
-    def apply(s: String): Move = s match {
+    def apply(s: String): Move = s.toUpperCase() match {
       case "R" => Rock
       case "P" => Paper
       case "S" => Scissors
