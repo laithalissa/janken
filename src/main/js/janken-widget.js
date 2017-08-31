@@ -63,6 +63,7 @@
 
     self.renderVoteForm = function() {
       var $select = $('<select>')
+      $select
         .append($select.val('r').text('Rock'))
         .append($select.val('p').text('Paper'))
         .append($select.val('s').text('Scissors'))
