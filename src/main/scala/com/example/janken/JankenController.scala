@@ -7,10 +7,12 @@ import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
 import com.twitter.finatra.request.RouteParam
 
-class JankenController(arena: Arena) extends Controller {
+class JankenController extends Controller {
+
+  val arena = new Arena()
 
   get("/") { _: Request =>
-    "Hello"
+    response.ok.file("../../../../../html/index.html")
   }
 
   post("/new-player") { _: Request =>
