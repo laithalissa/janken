@@ -74,9 +74,9 @@
     self.renderVoteForm = function() {
       var $select = $('<select>')
       $select
-        .append($select.val('r').text('Rock'))
-        .append($select.val('p').text('Paper'))
-        .append($select.val('s').text('Scissors'))
+        .append($('<option>').val('r').text('Rock'))
+        .append($('<option>').val('p').text('Paper'))
+        .append($('<option>').val('s').text('Scissors'))
 
       var $submit = $('<input>').attr('type', 'submit').attr('value', "Submit")
 
@@ -86,7 +86,7 @@
       });
 
       self.$voteTarget.html(
-        $('<form>').id('vote-form').append($select).append($submit).html()
+        $('<form>').attr('id', 'vote-form').append($select).append($submit).html()
       );
     }
 
@@ -95,4 +95,3 @@
 
   window.JankenWidget = Widget;
 })(jQuery);
-
