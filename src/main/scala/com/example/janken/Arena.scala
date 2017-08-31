@@ -3,38 +3,58 @@ package com.example.janken
 import java.time.Instant
 import java.util.concurrent.atomic.AtomicBoolean
 
-import Arena.{Move, PlayerId, Score}
+import Arena.{Move, PlayerId, Round, Score}
 
 import scala.collection.concurrent.TrieMap
 
 class Arena {
-  private val start = Instant.now
-  private val round: TrieMap[PlayerId, Move] = TrieMap()
-  private val open: AtomicBoolean = new AtomicBoolean(true)
+  private var rounds: TrieMap[Instant, Round] = TrieMap.empty
 
-  def makeMove(playerId: PlayerId, move: Move): Unit = {
-    if (open.get) {
-      round.getOrElseUpdate(playerId, move)
-    }
+  def startNewRound(): Round = {
+    val instant = Instant.now()
+    val round = Round(instant)
+    rounds.put(instant, round)
+    round
   }
 
-  def endRound(): Map[PlayerId, Score] = {
-    open.set(false)
-    val roundstate = round.toMap
-
-    val totalPlayersByMove: Map[Move, Int] = roundstate.groupBy(_._2).mapValues(_.toList.length)
-
-    val scoresByMove: Map[Move, Score] = totalPlayersByMove map {
-      case (move, _) => {
-        val beats = totalPlayersByMove.getOrElse(move.beats, 0)
-        val beatenBy = totalPlayersByMove.getOrElse(move.beatenBy, 0)
-        move -> Score(beats, beatenBy, totalPlayersByMove.getOrElse(move, 0))
+  def makeMove(instant: Instant, playerId: PlayerId, move: Move): Unit = {
+    rounds.get(instant).foreach ( round =>
+      if (round.open.get) {
+        round.moves.getOrElseUpdate(playerId, move)
       }
-    }
+    )
+  }
 
-    roundstate map {
-      case (playerId, move) => playerId -> scoresByMove.getOrElse(move, Score.empty)
-    }
+  def getCurrentRound(): Round = {
+    rounds.values.find(!_.isFinished).getOrElse(startNewRound())
+  }
+
+  def endRound(instant: Instant): Map[PlayerId, Score] = {
+    rounds.get(instant).map { round =>
+      if (round.isFinished) {
+        if (round.open.get()) {
+          round.open.set(false)
+          startNewRound()
+        }
+        val roundstate = round.moves.toMap
+
+        val totalPlayersByMove: Map[Move, Int] = roundstate.groupBy(_._2).mapValues(_.toList.length)
+
+        val scoresByMove: Map[Move, Score] = totalPlayersByMove map {
+          case (move, _) => {
+            val beats = totalPlayersByMove.getOrElse(move.beats, 0)
+            val beatenBy = totalPlayersByMove.getOrElse(move.beatenBy, 0)
+            move -> Score(beats, beatenBy, totalPlayersByMove.getOrElse(move, 0))
+          }
+        }
+
+        roundstate map {
+          case (playerId, move) => playerId -> scoresByMove.getOrElse(move, Score.empty)
+        }
+      } else {
+        Map.empty[PlayerId, Score]
+      }
+    }.getOrElse(Map.empty[PlayerId, Score])
   }
 }
 
@@ -69,6 +89,16 @@ object Arena {
     val beats = Paper
     val beatenBy = Rock
     val id = 3
+  }
+
+  case class Round(
+    startTime: Instant,
+    moves: TrieMap[PlayerId, Move] = TrieMap(),
+    open: AtomicBoolean = new AtomicBoolean(true)
+  ) {
+    def isFinished: Boolean = {
+      (Instant.now().getEpochSecond - startTime.getEpochSecond) >= 10
+    }
   }
 
   case class Score(
