@@ -8,17 +8,17 @@ import Arena.{Move, PlayerId, Round, Score}
 import scala.collection.concurrent.TrieMap
 
 class Arena {
-  private var rounds: TrieMap[Instant, Round] = TrieMap.empty
+  private var rounds: TrieMap[Long, Round] = TrieMap.empty
 
   def startNewRound(): Round = {
     val instant = Instant.now()
     val round = Round(instant)
-    rounds.put(instant, round)
+    rounds.put(instant.getEpochSecond, round)
     round
   }
 
   def makeMove(instant: Instant, playerId: PlayerId, move: Move): Unit = {
-    rounds.get(instant).foreach ( round =>
+    rounds.get(instant.getEpochSecond).foreach ( round =>
       if (round.open.get) {
         round.moves.getOrElseUpdate(playerId, move)
       }
@@ -30,7 +30,8 @@ class Arena {
   }
 
   def endRound(instant: Instant): Map[PlayerId, Score] = {
-    rounds.get(instant).map { round =>
+    rounds.get(instant.getEpochSecond).map { round =>
+      println(round.moves)
       if (round.isFinished) {
         if (round.open.get()) {
           round.open.set(false)

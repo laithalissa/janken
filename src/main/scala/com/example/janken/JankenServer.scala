@@ -1,5 +1,7 @@
 package com.example.janken
 
+import com.twitter.finagle.http.filter.Cors
+import com.twitter.finagle.http.filter.Cors.HttpFilter
 import com.twitter.finagle.http.{Request, Response}
 import com.twitter.finatra.http.HttpServer
 import com.twitter.finatra.http.filters.{CommonFilters, LoggingMDCFilter, TraceIdMDCFilter}
@@ -14,6 +16,7 @@ class JankenServer extends HttpServer {
       .filter[LoggingMDCFilter[Request, Response]]
       .filter[TraceIdMDCFilter[Request, Response]]
       .filter[CommonFilters]
+      .filter(new HttpFilter(Cors.UnsafePermissivePolicy))
       .add[JankenController]
   }
 }

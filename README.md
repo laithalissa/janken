@@ -28,7 +28,7 @@ Rock-Paper-Scissors
      }
      ```
  - GET /score?playerId=<String>&roundId=<string>
-   
+
    Response:
    ```
    {
@@ -37,7 +37,13 @@ Rock-Paper-Scissors
        losses: Int
    }
    ```
-   
+
 ## RUNNING
 
 `sbt 'run -local.doc.root=src/main'`
+
+Run the frontend:
+
+Go to `src/js/`
+`yarn install`
+`yarn start`

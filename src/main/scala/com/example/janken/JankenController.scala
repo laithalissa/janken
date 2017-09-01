@@ -12,6 +12,8 @@ class JankenController extends Controller {
 
   val arena = new Arena()
 
+  options("/") { _: Request => response.ok }
+
   get("/") { _: Request =>
     response.ok.file("html/index.html")
   }
@@ -21,13 +23,15 @@ class JankenController extends Controller {
   }
 
   get("/current") { _: Request =>
-    arena.getCurrentRound().startTime
+    arena.getCurrentRound().startTime.getEpochSecond
   }
 
+  options("/new-player") { _: Request => response.ok }
   post("/new-player") { _: Request =>
     UUID.randomUUID()
   }
 
+  options("/make-move") { _: Request => response.ok }
   post("/make-move") { request: MakeMoveRequest =>
     arena.makeMove(
       Instant.ofEpochSecond(request.timestamp),
@@ -42,7 +46,7 @@ class JankenController extends Controller {
 
   get("/score/:timestamp/:uuid") { request: ScoreRequest =>
     arena.endRound(Instant.ofEpochSecond(request.timestamp))
-      .get(request.uuid)
+      .getOrElse(request.uuid, Map())
   }
 
 }
