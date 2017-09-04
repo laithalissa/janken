@@ -21,3 +21,40 @@
 .interface-container {
   padding: 50px;
 }
+
+.move-btn {
+  font-size: 48px;
+  width: 60px;
+  height: 60px;
+  border: 2px black;
+}
+
+.move-btn.rock {
+  background-color: #8b4513;
+  border-radius: 15px 0 0 15px;
+}
+
+.move-btn.paper {
+  background-color: #fff;
+}
+
+.move-btn.scissors {
+  background-color: #aaa;
+  border-radius: 0 15px 15px 0;
+}
+
+.result-description {
+  font-size: 16px;
+}
+
+.result-description span.desc-red {
+  color: #f00;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.result-description span.desc-green {
+  color: #0d0;
+  font-size: 18px;
+  font-weight: bold;
+}

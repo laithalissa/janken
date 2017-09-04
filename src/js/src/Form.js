@@ -31,9 +31,9 @@ class Form extends Component {
       <div className="move-container">
         <p className="move-form-description">Choose your weapon!</p>
         <form className="move-form">
-          <button className="move-btn rock" value="r" onClick={this.handleSelect}>Rock</button>
-          <button className="move-btn paper" value="p" onClick={this.handleSelect}>Paper</button>
-          <button className="move-btn scissors" value="s" onClick={this.handleSelect}>Scissors</button>
+          <button className="move-btn rock" value="r" onClick={this.handleSelect}>👊</button>
+          <button className="move-btn paper" value="p" onClick={this.handleSelect}>✋</button>
+          <button className="move-btn scissors" value="s" onClick={this.handleSelect}>✌</button>
         </form>
       </div>
     )
